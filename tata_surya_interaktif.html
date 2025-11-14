@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tata Surya Interaktif</title>
+<style>
+body { background:url('space-bg.png'); background-size:cover; background-attachment:fixed; color:white; }
+.planet { width:80px; height:80px; border-radius:50%; margin:20px; display:inline-block;
+         box-shadow: inset -8px -8px 16px rgba(0,0,0,0.5), inset 6px 6px 16px rgba(255,255,255,0.3);
+         animation: orbit 20s linear infinite; }
+#solar-system { margin-top:120px; text-align:center; }
+@keyframes orbit { from { transform: rotate(0deg) translateX(50px) rotate(0deg);}
+                   to { transform: rotate(360deg) translateX(50px) rotate(-360deg);} }
+nav { position:fixed; top:20px; left:20px; display:flex; gap:10px; z-index:999; }
+button { padding:8px 14px; border-radius:8px; }
+.credit { position:fixed; bottom:10px; left:10px; padding:5px 12px; background:rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<nav>
+<button onclick="window.scrollTo(0,0)">Beranda</button>
+<button onclick="document.getElementById('quiz').scrollIntoView()">Kuis</button>
+<button onclick="document.getElementById('solar-system').scrollIntoView()">Tata Surya</button>
+</nav>
+
+<div class="credit">Dibuat oleh: <b>Fery Ariyanto</b></div>
+
+<h1 style="text-align:center;">Tata Surya Interaktif</h1>
+
+<div id="solar-system">
+<div class="planet" style="background:gray;"></div>
+<div class="planet" style="background:orange;"></div>
+<div class="planet" style="background:blue;"></div>
+</div>
+
+<audio id="bgSound" src="space.mp3" autoplay loop></audio>
+<button id="muteBtn" style="position:fixed; bottom:20px; right:20px; padding:10px 20px;">Mute</button>
+
+<div id="quiz" style="margin-top:200px;">
+<h2>Kuis Tata Surya</h2>
+<p>1. Planet ketiga dari Matahari?</p>
+<input type="radio" name="q1" value="Mars">Mars<br>
+<input type="radio" name="q1" value="Bumi">Bumi<br>
+<input type="radio" name="q1" value="Venus">Venus<br>
+<button onclick="checkAnswer(1,'Bumi')">Jawab</button>
+<br><br>
+<button onclick="showFinalScore()">Lihat Skor Akhir</button>
+</div>
+
+<script>
+let score = 0;
+
+const bgSound = document.getElementById('bgSound');
+const muteBtn = document.getElementById('muteBtn');
+muteBtn.addEventListener('click', () => {
+  bgSound.muted = !bgSound.muted;
+  muteBtn.textContent = bgSound.muted ? "Unmute" : "Mute";
+});
+
+function checkAnswer(q, correct){
+  const sel = document.querySelector(`input[name="q${q}"]:checked`);
+  if(!sel) return alert("Pilih dulu jawabannya!");
+  if(sel.value === correct){
+    score++;
+    alert("Benar! Skor: "+score);
+  } else {
+    alert("Salah! Skor tetap: "+score);
+  }
+}
+function showFinalScore(){
+  alert("Kuis selesai! Skor akhir kamu: "+score);
+}
+</script>
+
+</body>
+</html>
